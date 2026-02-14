@@ -80,13 +80,13 @@ src/
 
 ```bash
 # Clone the repo
-git clone <your-repo-url>
+git clone https://github.com/subramanyaraju1112/dynamic_filter_component_system.git
 
 # Install dependencies
-npm install
+yarn install
 
 # Start development server
-npm run dev
+yarn dev
 ```
 
 App runs at:
