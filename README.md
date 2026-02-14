@@ -1,73 +1,166 @@
-# React + TypeScript + Vite
+# Dynamic Filter Component System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **React + TypeScript** application that demonstrates a fully client-side **dynamic filtering engine** with real-time table updates, multiple filter logic, and modular architecture.
 
-Currently, two official plugins are available:
+This project was built as a **frontend assessment–style implementation** focusing on correctness, scalability, and clean component design.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Advanced Client-Side Filtering
 
-## Expanding the ESLint configuration
+* Real-time filtering as inputs change
+* **AND logic between different fields**
+* **OR logic within the same field**
+* Case-insensitive text search
+* Numeric comparisons (`=`, `>`, `<`, `between`, etc.)
+* Date range filtering with proper parsing
+* Multi-select array filtering (`IN` / `NOT IN`)
+* Nested object filtering (e.g., `address.city`)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Modular Architecture
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* Reusable **filter engine** separated from UI
+* Config-driven **field and operator mapping**
+* Typed **FilterCondition** model for scalability
+* Clean separation of:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+  * UI components
+  * hooks
+  * utilities
+  * filtering logic
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Data Handling
+
+* 50-record realistic employee dataset
+* Multiple data types:
+
+  * text
+  * numbers
+  * dates
+  * booleans
+  * arrays
+  * nested objects
+* CSV export of **filtered results**
+
+---
+
+## Tech Stack
+
+* **React (Vite)**
+* **TypeScript**
+* **Material UI (MUI)**
+* **Client-side filtering engine (custom implementation)**
+
+No backend required — data is mocked locally.
+
+---
+
+## Project Structure
+
+```
+src/
+│
+├── data/                # Mock dataset & API
+├── features/
+│   ├── filters/         # Filter UI + engine config
+│   └── table/           # Data table & sorting
+├── types/               # Shared TypeScript models
+├── utils/
+│   └── filterEngine/    # Core filtering algorithms
+│
+└── pages/
+    └── Home.tsx         # Main screen
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Installation
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Clone the repo
+git clone <your-repo-url>
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
+
+App runs at:
+
+```
+http://localhost:5173
+```
+
+---
+
+## Key Engineering Decisions
+
+### 1. Single Source of Truth for Filters
+
+Filter state is managed in **Home.tsx** and passed down via props to avoid:
+
+* duplicate state
+* stale UI updates
+* inconsistent filtering
+
+---
+
+### 2. Decoupled Filtering Engine
+
+Filtering logic is **UI-independent**, enabling:
+
+* reuse in other components
+* easy unit testing
+* scalability for backend migration
+
+---
+
+### 3. Logical Grouping Strategy
+
+```
+AND → across fields  
+OR  → within same field
+```
+
+This mirrors **real production search/filter systems**.
+
+---
+
+## Example Use Cases
+
+* Find employees with:
+
+  * `Department = Engineering`
+  * `Salary > 90,000`
+* Search:
+
+  * `Name contains "Arjun"`
+* Filter by:
+
+  * join date range
+  * skills (multi-select)
+  * nested city field
+
+---
+
+## Future Improvements
+
+* Server-side filtering support
+* Pagination & virtualization
+* Saved filter presets
+* Unit tests for filter engine
+* URL query sync for shareable filters
+
+---
+
+## Author
+
+**Subramanya Raju**
+Frontend Engineer — React, TypeScript, Redux, Healthcare Platforms
+
+---
+
